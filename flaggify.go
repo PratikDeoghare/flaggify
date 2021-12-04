@@ -5,6 +5,8 @@ import (
 	"reflect"
 )
 
+// Flaggify creates command line flag with `json` struct tag as name, default
+// value from provided default values struct and help text from the `x` struct tag (x for eXplanation).
 func Flaggify(s, sDefault interface{}) {
 	sVal := reflect.ValueOf(s)
 	sTyp := reflect.TypeOf(s)
