@@ -13,6 +13,7 @@ func TestFlaggifyIt(t *testing.T) {
 		Age   int    `json:"age" x:"age of the student"`
 		City  string `json:"city" x:"city of the student"`
 		Hobby string `json:"hobby" x:"hobby of the student"`
+		Lazy  bool   `json:"lazy" x:"lazy or not"`
 	}
 
 	studentDefault := student{
@@ -20,12 +21,13 @@ func TestFlaggifyIt(t *testing.T) {
 		Age:   20,
 		City:  "Rivendell",
 		Hobby: "reading",
+		Lazy:  true,
 	}
 
 	s := new(student)
 
 	flag.StringVar(&s.Hobby, "hobby", "", "HOBBY of the student")
-	flaggify.It(s, studentDefault)
+	flaggify.Flaggify(s, studentDefault)
 
 	os.Args = []string{"", "-name", "Jack", "-age", "44"}
 
@@ -45,5 +47,9 @@ func TestFlaggifyIt(t *testing.T) {
 
 	if s.Hobby != "" {
 		t.Errorf("Expected hobby to be reading, got %s", s.Hobby)
+	}
+
+	if s.Lazy != true {
+		t.Errorf("Expected lazy to be true, got %t", s.Lazy)
 	}
 }

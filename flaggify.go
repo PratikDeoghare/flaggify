@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-func It(s, sDefault interface{}) {
+func Flaggify(s, sDefault interface{}) {
 	sVal := reflect.ValueOf(s)
 	sTyp := reflect.TypeOf(s)
 	sValElemTyp := sVal.Elem().Type()
@@ -22,6 +22,8 @@ func It(s, sDefault interface{}) {
 		}
 
 		switch field.Kind() {
+		case reflect.Bool:
+			flag.BoolVar(field.Addr().Interface().(*bool), jsonTag, sDefaultVal.Field(i).Bool(), flagTag)
 		case reflect.Int:
 			flag.IntVar(field.Addr().Interface().(*int), jsonTag, int(sDefaultVal.Field(i).Int()), flagTag)
 		case reflect.String:
